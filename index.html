@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lector QR - Validador de Acceso</title>
-    <script src="https://unpkg.com/html5-qrcode@2.3.4/minified/html5-qrcode.min.js"></script>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -52,7 +51,7 @@
     </style>
   </head>
   <body>
-    <h1>Validador de Códigos QR CENTROAGUAS</h1>
+    <h1>Validador Códigos QR CENTROAGUAS SA</h1>
 
     <div id="reader"></div>
     <div id="result" class="scanning">Esperando escaneo...</div>
@@ -61,6 +60,7 @@
       // --- Configuración del endpoint de la API ---
       // *** IMPORTANTE: Usa la URL de tu API desplegada en Azure, no 127.0.0.1 en producción ***
       //const API_ENDPOINT = "http://127.0.0.1:8000/validate_qr";
+      src="https://unpkg.com/html5-qrcode@2.3.4/minified/html5-qrcode.min.js"
       const API_ENDPOINT =
         "http://127.0.0.1:8000/docs#/default/validate_qr_validate_qr_post";
 
@@ -128,3 +128,5 @@
     </script>
   </body>
 </html>
+
+
