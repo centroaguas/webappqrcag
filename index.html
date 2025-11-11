@@ -5,81 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lector QR - Validador de Acceso</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 20px;
-        background-color: #f4f4f4;
-      }
-      #reader {
-        width: 400px;
-        max-width: 100%;
-        border: 2px solid #ccc;
-        border-radius: 8px;
-        overflow: hidden;
-      }
-      #result {
-        margin-top: 20px;
-        padding: 15px;
-        border-radius: 5px;
-        width: 400px;
-        max-width: 100%;
-        text-align: center;
-      }
-      .success {
-        background-color: #e6ffe6;
-        border: 1px solid #00cc00;
-        color: #00cc00;
-      }
-      .warning {
-        background-color: #fffbe6;
-        border: 1px solid #ffcc00;
-        color: #ffcc00;
-      }
-      .error {
-        background-color: #ffe6e6;
-        border: 1px solid #cc0000;
-        color: #cc0000;
-      }
-      .scanning {
-        background-color: #e6f7ff;
-        border: 1px solid #3399ff;
-        color: #3399ff;
-      }
+      /* ... (tu CSS permanece igual) ... */
     </style>
   </head>
   <body>
-    <h1>Validador Códigos QR CENTROAGUAS SA</h1>
+    <h1>Validador de Códigos QR CENTROAGUAS</h1>
 
     <div id="reader"></div>
     <div id="result" class="scanning">Esperando escaneo...</div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+
     <script>
       // --- Configuración del endpoint de la API ---
       // *** IMPORTANTE: Usa la URL de tu API desplegada en Azure, no 127.0.0.1 en producción ***
-      //const API_ENDPOINT = "http://127.0.0.1:8000/validate_qr";
-      src="https://unpkg.com/html5-qrcode@2.3.4/minified/html5-qrcode.min.js"
       const API_ENDPOINT =
         "http://127.0.0.1:8000/docs#/default/validate_qr_validate_qr_post";
 
       const resultDiv = document.getElementById("result");
+      
+      // La línea de código incorrecta "src=..." ha sido eliminada.
+      // Ahora, la clase Html5Qrcode ya estará definida.
       const html5QrCode = new Html5Qrcode("reader");
 
       // Función que se ejecuta al escanear exitosamente
       const onScanSuccess = (decodedText, decodedResult) => {
-        // Detener el escaneo para evitar múltiples lecturas del mismo código
+        // ... (el resto de tu lógica es correcta) ...
         html5QrCode.pause();
         resultDiv.className = "scanning";
         resultDiv.innerHTML = `Escaneado: ${decodedText}. Procesando...`;
 
-        // Llama a la API con el ID
         validateQrCode(decodedText);
       };
 
       // Función para enviar el ID a la API y manejar la respuesta
       const validateQrCode = async (qrId) => {
+        // ... (el resto de tu lógica es correcta) ...
         try {
           const response = await fetch(API_ENDPOINT, {
             method: "POST",
@@ -90,27 +51,23 @@
           const data = await response.json();
 
           if (response.ok) {
-            // Respuesta exitosa (status 200) de la API (QR marcado como leído o ya estaba leído)
             resultDiv.className = data.status;
             resultDiv.innerHTML = `<strong>${data.message}</strong><br>ID: ${data.details.id}`;
           } else {
-            // Error de la API (e.g., código no encontrado, status 404, o error interno 500)
             resultDiv.className = "error";
             resultDiv.innerHTML = `<strong>ERROR:</strong> ${
               data.detail || "Error desconocido"
             }`;
           }
         } catch (error) {
-          // Error de red (API no accesible)
           resultDiv.className = "error";
           resultDiv.innerHTML = `<strong>ERROR DE CONEXIÓN:</strong> No se pudo conectar a la API.`;
         } finally {
-          // Reanudar el escaneo después de un breve periodo
           setTimeout(() => {
             html5QrCode.resume();
             resultDiv.className = "scanning";
             resultDiv.innerHTML = "Esperando escaneo...";
-          }, 3000); // 3 segundos antes de reanudar el escaneo
+          }, 3000); 
         }
       };
 
@@ -121,12 +78,12 @@
         config,
         onScanSuccess,
         (errorMessage) => {
-          // Muestra mensajes de error de escaneo si es necesario
-          // console.log(`Error de escaneo: ${errorMessage}`);
+          // ...
         }
       );
     </script>
   </body>
 </html>
+
 
 
