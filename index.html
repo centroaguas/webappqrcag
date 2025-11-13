@@ -51,7 +51,7 @@
     </style>
   </head>
   <body>
-    <h1>Validador de Códigos QR CENTROAGUAS V2</h1>
+    <h1>Validador de Códigos QR CENTROAGUAS V3</h1>
 
     <div id="reader"></div>
     <div id="result" class="scanning">Esperando escaneo...</div>
@@ -101,7 +101,7 @@
           }
         } catch (error) {
           resultDiv.className = "error";
-          resultDiv.innerHTML = `<strong>ERROR DE CONEXIÓN:</strong> No se pudo conectar a la API.`;
+          resultDiv.innerHTML = `<strong>ERROR DE CONEXIÓN:</strong> <span style="color: yellow;">${error.message}</span>`;
         } finally {
           setTimeout(() => {
             html5QrCode.resume();
@@ -124,6 +124,7 @@
     </script>
   </body>
 </html>
+
 
 
 
